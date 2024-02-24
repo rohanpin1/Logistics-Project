@@ -1,0 +1,88 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Models.Blocks
+
+@{
+	var root = Model.Root();
+	var websiteSettings = root?.FirstChild<WebsiteSettings>() as WebsiteSettings;
+	var navigation = websiteSettings?.FirstChild<Navigations>() as Navigations;
+	var globalSettings = websiteSettings?.FirstChild<GlobalSettings>() as GlobalSettings;
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="footer footer_w3layouts_section_1its py-5" id="subscribe">
+	<div class="container pt-sm-4">
+		<div class="row footer-grid">
+			@{
+				foreach (var data in navigation?.CompleteFooterSection)
+				{
+					var alias = data.Content.ContentType.Alias;
+					switch (alias)
+					{
+						case "footerMainSection":
+							//html code as per your demand.
+
+							var footerMainSection = data.Content as FooterMainSection;
+							
+							<div class="col-md-5 footer-grid_section_1its_w3">
+								<div class="footer-title">
+									<h3>@footerMainSection.FooterMainSectionTitle</h3>
+								</div>
+								<div class="footer-text">
+									<p>@footerMainSection?.FooterMainSectionPara</p>
+									<ul class="social_section_1info">
+										@foreach (var i in footerMainSection?.FooterMainSectionLinksWithIcons)
+										{
+											var iconSec = i.Content as WebIcons;
+											<li><a href="@iconSec?.SuperImposedLinks?.Url" class="w3_facebook" target="_blank" style="font-size:25px">@iconSec?.Icons</a></li>
+										}										
+									</ul>
+								</div>
+							</div>
+							break;
+
+						case "usefulLinks":
+							var UseFullLinks = data.Content as UsefulLinks;
+							<div class="col-md-3 col-sm-5 footer-grid_section_1its_w3 mt-md-0 mt-4">
+								<div class="footer-title">
+									<h3>@UseFullLinks?.UsefulLinksTitle</h3>
+								</div>
+								<ul class="links">
+									@foreach (var j in UseFullLinks?.UsefulSectionLinks)
+									{
+										<li><a href="@j.Url" target="_blank">@j.Name</a></li>
+									}
+								</ul>
+							</div>
+							break;
+
+						case "subcription":
+							var Subscriptions = data.Content as Subcription;
+							<div class="col-md-4 col-sm-7 footer-grid_section_1its_w3 mt-md-0 mt-4">
+								<div class="footer-title">
+									<h3>@Subscriptions?.SubscriptionTitleName</h3>
+								</div>
+								<div class="footer-text">
+									<p>@Subscriptions?.SubscriptionDetails</p>
+									<form action="#" method="post">
+										<input type="email" name="Email" placeholder="@Subscriptions?.SubscriptionEmailPlaceholder" required="">
+										<button class="btn1"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+										<div class="clearfix"> </div>
+									</form>
+								</div>
+							</div>
+							break;
+					}
+				}
+			}
+			<div class="clearfix"></div>
+			<!-- move top -->
+			<div class="move-to-top text-center">
+				<a href="#home" class="move-top"><span class="fa fa-angle-double-up" aria-hidden="true"></span></a>
+			</div>
+			<!-- //move top -->
+			<div class="copyright">
+				<p>© 2023 Logistic. All Rights Reserved | Design by <a href="">Rohan and Team</a> </p>
+			</div>
+		</div>
+	</div>
+</div>

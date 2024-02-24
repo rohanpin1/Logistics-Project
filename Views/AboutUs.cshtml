@@ -1,0 +1,147 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.AboutUs>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "Master.cshtml";
+}
+
+@foreach (var aboutSecItem in Model?.UpperContentBlockList)
+{
+	var aboutSecData = aboutSecItem.Content as HomeTopUpperSection;
+
+	<section class="about py-5" id="how">
+		<div class="container py-md-3">
+			<h2 class="heading text-center mb-sm-5 mb-4"> @aboutSecData?.HeadingTitle </h2>
+			<div class="row about-grids">
+				<div class="col-lg-6 about-left">
+					<img src="@aboutSecData?.SectionImage?.Url()" alt="" class="img-fluid" />
+				</div>
+				<div class="col-lg-6 grid1 mt-lg-0 mt-4 pl-lg-5">
+					<h3 class="my-lg-4 mb-2">@aboutSecData?.HeadingTitle</h3>
+					<p class="">
+						@aboutSecData?.Description
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</section>
+}
+<!-- //about -->
+<!-- Team section -->
+<section class="team py-5" id="team">
+	<div class="container py-lg-5">
+		<h3 class="heading text-center mb-5 pb-md-5 pb-3"> @Model?.MemberSectionHeading</h3>
+		<div class="section_header">
+			<div class="row">
+
+				@foreach (var members in Model?.MemberInfos)
+				{
+					var memberInfo = members.Content as TeamMembers;
+
+					<div class="col-lg-4 col-md-6 col-sm-12 mb-md-0 mb-60">
+						<div class="our-services-wrapper">
+							<div class="services-inner">
+								<div class="our-team-img">
+									<img src="@memberInfo?.MemberImage?.Url()" class="team_member img-fluid" alt="Team Member">
+								</div>
+								<div class="our-services-text team-info">
+									<h3 class="team_name">@memberInfo?.MemberName</h3>
+									<span class="team_role">@memberInfo?.Designation</span>
+									<p class="mt-sm-3 mt-2">@memberInfo?.MemberDescription</p>
+									<ul class="team-social mt-md-3 mt-2">
+										<li><a href="#"><span class="fa fa-facebook icon_facebook"></span></a></li>
+										<li><a href="#"><span class="fa fa-twitter icon_twitter"></span></a></li>
+										<li><a href="#"><span class="fa fa-linkedin icon_linkedin"></span></a></li>
+										<li><a href="#"><span class="fa fa-google-plus icon_google-plus"></span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				}
+
+			</div>
+		</div>
+	</div>
+</section>
+<!-- //Team section -->
+<!-- stats -->
+@foreach (var numbers in Model?.OurNumbers)
+{
+	var numberDesc = numbers.Content as OurNumbers;
+	<section class="stats py-5">
+		<div class="container py-lg-5 py-md-3">
+			<div class="row stat-grids">
+				<div class="col-lg-5">
+					<h4 class="heading mb-3">@numberDesc?.StaticalTitle</h4>
+					<p class="">
+						@numberDesc?.StaticalDescription
+					</p>
+				</div>
+				<div class="col-lg-6 offset-lg-1 stats-right">
+					@foreach (var numberCardItem in numberDesc?.NumberCardBlockList)
+					{
+						var numberCardData = numberCardItem.Content as NumberCard;
+						<div class="row stats-inner-grid">
+						<div class="col-sm-6 col-6">
+								<h4>@numberCardData?.Numbers</h4>
+								<p>@numberCardData?.NumberDescription <br>@numberCardData?.NumberLowerDescription</p>
+						</div>
+						
+					</div>
+					
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+}
+<!-- //stats -->
+<!-- testimonials -->
+
+	<section class="clients py-5" id="clients">
+	<div class="container py-lg-5 py-md-3">
+			<h3 class="heading text-center mb-5"> @Model?.SectionTitle</h3>
+		<div class="main-clients">
+			<div class="csslider infinity" id="slider1">
+				<input type="radio" name="slides" checked="checked" id="slides_1" />
+				<input type="radio" name="slides" id="slides_2" />
+				<input type="radio" name="slides" id="slides_3" />
+				<input type="radio" name="slides" id="slides_4" />
+				<ul class="banner_slide_bg">				
+					@foreach (var testimonialSec in Model?.TestimonialBloskList)
+					{
+						var testimonialData = testimonialSec.Content as Testimonial;
+					<li>
+						<div class="feedback-top">
+							<p>
+								<span class="fa mr-2 fa-quote-left"></span>
+									@testimonialData?.Feedback
+							</p>
+							<div class="row client-info">
+								<div class="col-6 pr-0">
+										<img src="@testimonialData?.PersonImage?.Url()" alt=" " class="img-fluid rounded-circle mt-4">
+								</div>
+								<div class="col-6 pl-0 text-left">
+										<h4 class="mt-5">@testimonialData?.PersonName</h4>
+										<p>@testimonialData?.Country</p>
+								</div>
+							</div>
+						</div>
+					</li>
+					}
+				</ul>
+				<div class="navigation">
+					<div>
+						<label for="slides_1"></label>
+						<label for="slides_2"></label>
+						<label for="slides_3"></label>
+						<label for="slides_4"></label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
